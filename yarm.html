@@ -1,0 +1,128 @@
+<script type="text/javascript">
+    RED.nodes.registerType('yarm tx',{
+        category: 'function',
+        color: '#ff6633',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "feed.png",
+        label: function() {
+            return this.name||"yarm tx";
+        }
+    });
+</script>
+ 
+<script type="text/x-red" data-template-name="yarm tx">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="yarm tx">
+	<p>Send a formatted message to a Yarm radio module via serial port.</p>
+	
+	<p>The output of this node has to be sent to standard Node-RED serial request node. The output
+	of that node has to be sent to a yarm rx node to manage the replies from the remote nodes.</p>
+
+	<h3>Inputs</h3>
+	    <dl class="message-properties">
+	        <dt>payload
+	            <span class="property-type">string | buffer</span>
+	        </dt>
+	        <dd> the payload of the message to send. </dd>
+	    </dl>
+	
+	 <h3>Outputs</h3>
+	     <ol class="node-ports">
+	         <li>Standard output
+	             <dl class="message-properties">
+	                 <dt>payload <span class="property-type">buffer</span></dt>
+	                 <dd>the binary buffer to send on serial port.</dd>
+	             </dl>
+	         </li>
+	     </ol>
+	
+	<h3>Payload format</h3>
+	    <p><code>msg.payload</code> is used as the payload of the message to send.
+	    If it contains an Object it will be converted to a JSON string before being sent.
+		</p>
+		
+		<p>
+		Example:
+
+<pre>
+{
+    "address": 1,
+    "cmd": "gpioset",
+    "portid": 1,
+    "msgid": 1
+}		
+</pre>
+		</p>
+
+	    <dl class="message-properties">
+	        <dt>address
+	            <span class="property-type">number</span>
+	        </dt>
+	        <dd> address of the remote Yarm node. </dd>
+	    </dl>
+
+	    <dl class="message-properties">
+	        <dt>cmd
+	            <span class="property-type">string</span>
+	        </dt>
+	        <dd> command to execute (gpioset,gpioreset). </dd>
+	    </dl>
+
+	    <dl class="message-properties">
+	        <dt>portid
+	            <span class="property-type">number</span>
+	        </dt>
+	        <dd> remote portid if the identifier of the remote GPIO line (0..1). </dd>
+	    </dl>
+
+	    <dl class="message-properties">
+	        <dt>messageid
+	            <span class="property-type">number</span>
+	        </dt>
+	        <dd> message id (0...255). This number id useful to identify the source message
+	        when the remote Yarm will send back the reply </dd>
+	    </dl>
+
+
+	<h3>References</h3>
+	    <ul>
+	        <li><a href="http://www.acmesystems.it/yarm">Yarm Radio Module</a></li>
+	    </ul>
+    
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('yarm rx',{
+        category: 'function',
+        color: '#ff6633',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "arrow-in.png",
+        label: function() {
+            return this.name||"yarm rx";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="yarm rx">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="yarm rx">
+	<p>Receive a message from the Yarm radio module coming from a standard Node-RED serial node</p>
+</script>

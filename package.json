@@ -1,0 +1,22 @@
+{
+  "name": "node-red-contrib-yarm",
+  "version": "0.0.4",
+  "description": "Yarm radio link",
+  "homepage": "http://www.tanzolab.it/node-red-contrib-yarm",
+  "main": "index.js",
+  "repository": {
+     "type": "git",
+     "url": "https://github.com/node-red/node-red-nodes.git"
+   },
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sergio Tanzilli",
+  "license": "ISC",
+  "node-red" : {
+        "nodes": {
+            "lower-case": "yarm.js"
+        }
+    }
+}
